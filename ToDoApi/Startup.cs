@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToDoApi.Repositories;
+using ToDoApi.Repositories.Interfaces;
 
 namespace ToDoApi
 {
@@ -23,6 +25,13 @@ namespace ToDoApi
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddMvc();
+
+			services.AddLogging();
+
+			// Add our repository type
+			services.AddSingleton<IToDoRepository, ToDoRepository>();
+
 			services.AddControllersWithViews();
 		}
 
@@ -40,6 +49,7 @@ namespace ToDoApi
 				app.UseHsts();
 			}
 			app.UseHttpsRedirection();
+			app.UseDefaultFiles();
 			app.UseStaticFiles();
 
 			app.UseRouting();
